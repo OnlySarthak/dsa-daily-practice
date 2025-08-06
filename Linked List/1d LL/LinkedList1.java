@@ -22,21 +22,33 @@ public class LinkedList1 {
 
         return head;
     }
-
-    public static void main(String[] args) {
-        int[] arr = {12, 5, 6, 8};         // Sample array
-        Node head = convertArr2LL(arr);   // Convert array to linked list
-        int cnt = 0;
-
-        // Print the linked list
+     private static void printList(Node head){
         Node temp = head;
+        int cnt = 0;
         while (temp != null) {
             System.out.print(temp.data + " ");
             temp = temp.next;
             cnt++;
         }
+        System.out.println("\nlength of LL : " + cnt);
+     }
 
-        System.out.println("length of LL : " + cnt);
+    public static void main(String[] args) {
+        int[] arr = {12};         // Sample array
+        Node head = convertArr2LL(arr);   // Convert array to linked list
+
+        printList(head);
+        
+        head = deleteHead(head);
+        
+        printList(head);
+
+    }
+
+    private static Node deleteHead(Node head){
+        if(head==null)return head;
+        head = head.next;
+        return head;
     }
 
      private static boolean search(Node head, int key) {
