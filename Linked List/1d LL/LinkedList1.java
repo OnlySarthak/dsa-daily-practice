@@ -1,3 +1,7 @@
+
+
+
+
 class Node {
     int data;
     Node next;
@@ -33,21 +37,49 @@ public class LinkedList1 {
         System.out.println("\nlength of LL : " + cnt);
      }
 
+     private static Node removerK(Node head, int k){
+        if(head==null)return head;
+        if(k==1){ head = head.next;
+        return head;}
+
+        Node iterNode = head, prev = null;
+        int cnt = 0;
+        
+        while(iterNode!= null){
+            cnt++;
+            if(cnt == k){
+                prev.next = prev.next.next;
+                return head;
+            }
+            prev = iterNode;
+            iterNode = iterNode.next;
+        }
+        return head;
+     }
     public static void main(String[] args) {
-        int[] arr = {12};         // Sample array
+        int[] arr = {12,13,14};         // Sample array
         Node head = convertArr2LL(arr);   // Convert array to linked list
 
         printList(head);
-        
-        head = deleteHead(head);
-        
+        head = removerK(head, 1);        
         printList(head);
-
     }
 
     private static Node deleteHead(Node head){
         if(head==null)return head;
         head = head.next;
+        return head;
+    }
+    
+    private static Node deleteTail(Node head){
+        if(head==null || head.next == null){
+            return null;
+        }
+        Node iterNode = head;
+        while (iterNode.next.next != null) {
+            iterNode = iterNode.next;
+        }
+        iterNode.next=null;
         return head;
     }
 
