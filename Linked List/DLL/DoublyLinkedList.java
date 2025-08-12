@@ -31,7 +31,7 @@ public class DoublyLinkedList {
         Node head = convertArr2DLL(arr, arr.length);
 
         Print(head);
-        head = reverse(head);
+        head = reverse2(head);
         Print(head);
     }
 
@@ -50,6 +50,23 @@ public class DoublyLinkedList {
         }
 
         return head;
+    }
+
+    private static Node reverse2(Node head){        //by striver
+        if(head == null || head.next==null)return head;
+
+        Node iterNode = head, prev = null;
+
+        while(iterNode != null){
+            prev = iterNode.prev;
+
+            iterNode.prev = iterNode.next;
+            iterNode.next = prev;
+
+            //go forward
+            iterNode = iterNode.prev;
+        }
+        return prev.prev;
     }
 
     private static Node insertHead(Node head, int val) {
