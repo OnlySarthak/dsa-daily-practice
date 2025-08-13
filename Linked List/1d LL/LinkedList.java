@@ -14,7 +14,7 @@ class Node {
     }
 }
 
-public class LinkedList1 {
+public class LinkedList {
 
     public static void main(String[] args) {
         int[] arr = { 12, 13 }; // Sample array
