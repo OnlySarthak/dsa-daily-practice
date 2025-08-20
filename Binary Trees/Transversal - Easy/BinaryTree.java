@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 class Node{
     int data;
     Node left, right;
@@ -28,12 +31,28 @@ public class BinaryTree {
 
         root.left.left = new Node(15);
 
-        System.out.println("preorder :");
-        preorderTransverse(root);
-        System.out.println("\n inorder :");
-        inorderTransverse(root);
-        System.out.println("\n postorder :");
-        postorderTransverse(root);
+        // System.out.println("preorder :");
+        // preorderTransverse(root);
+        // System.out.println("\n inorder :");
+        // inorderTransverse(root);
+        // System.out.println("\n postorder :");
+        // postorderTransverse(root);
+
+        System.out.println("level vise travelsal");
+        levelOrderTraversel(root);
+    }
+
+    private static void levelOrderTraversel(Node root){
+        Queue<Node> queue = new LinkedList<>();
+
+        queue.add(root);
+        while(!queue.isEmpty()){
+            Node currentNode = queue.poll();
+            System.out.println(currentNode.data);
+
+            if(currentNode.left != null)queue.offer(currentNode.left);
+            if(currentNode.right != null)queue.offer(currentNode.right);
+        }
     }
 
     private static void inorderTransverse(Node node){
