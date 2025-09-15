@@ -32,12 +32,12 @@ public class BinaryTree {
         root.right = new Node(14);
         root.left.left = new Node(15);
 
-        
-            System.out.println("\n inorder :");
-            preorderTransverse(root);
+        inorderIterative2(root);
+            // System.out.println("\n inorder :");
+            // inorderTransverse(root);
             
-            System.out.println("\n inorder interative :");
-            preorderIterative(root);
+            // System.out.println("\n inorder interative :");
+            // inorderIterative(root);
 
         if(letTest)
         {
@@ -61,21 +61,72 @@ public class BinaryTree {
             Node currentNode = queue.poll();
             System.out.println(currentNode.data);
 
-            if(currentNode.left != null)queue.offer(currentNode.left);
-            if(currentNode.right != null)queue.offer(currentNode.right);
+            if(currentNode.left != null)queue.add(currentNode.left);
+            if(currentNode.right != null)queue.add(currentNode.right);
 
         }
     }
-    private static void preorderIterative(Node root){
+
+    private static void preorderIterative(Node root){ 
+        if (root == null) return;   // edge case
+
+        Stack<Node> st = new Stack<>();
+        st.push(root);
+
+        while(!st.isEmpty()){
+            Node curr = st.pop();
+            System.out.println(curr.data);
+
+            // Push right child first so that left is processed first
+        }
+    }
+
+    private static void inorderIterative2(Node root){ 
+        if (root == null) return;   // edge case
+
+        Stack<Node> st = new Stack<>();
+        int last_printed = 0;
+        st.push(root);
+
+        while(!st.isEmpty()){
+            Node curr = st.pop();
+            // System.out.println(curr.data);
+            if(curr.left == null && curr.right == null ){
+                System.out.println(curr.data);
+                last_printed = curr.data;
+
+                // if(!st.isEmpty())System.out.println(st.pop().data);
+            }
+            else{
+                if(curr.left.data == last_printed)System.out.println("test " +curr.data);
+                else{
+                    if(curr.right != null)st.push(curr.right);
+                    st.push(curr);
+                    if(curr.left != null ) st.push(curr.left); 
+                    System.out.println("test 2 " + curr.left.data + " " + curr.data + " " + curr.right.data);      
+                }
+            }
+        }
+    }
+
+    private static void inorderIterative(Node root){
         Stack<Node> st = new Stack<>();
 
         st.push(root);
         while(!st.isEmpty()){
             Node currentNode = st.pop();
-            System.out.print(currentNode.data + " ");
-
+            
+            
             if(currentNode.right != null)st.push(currentNode.right);
             if(currentNode.left != null)st.push(currentNode.left);
+
+            while(currentNode.left !=null){
+                st.push(currentNode.right);
+            }
+            System.out.println(st.pop().data + " ");
+            currentNode = st.pop();
+            System.out.println(currentNode.data);  
+            if(currentNode.right != null)st.push(currentNode.right);
         }
     }
 

@@ -8,7 +8,7 @@ public class IntegerAndBinary {
         if (n == 0) return "0";
         StringBuilder sb = new StringBuilder();
         while (n > 0) {
-            sb.insert(0, (n % 2 == 0 ? '0' : '1'));
+            sb.insert(0, n % 2);
             n /= 2;
         }
         return sb.toString();
