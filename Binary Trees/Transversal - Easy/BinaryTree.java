@@ -23,6 +23,8 @@ public class BinaryTree {
         root.right.right = new Node(16);
         root.right.right.right = new Node(17);
 
+        System.out.println(isBalancedTree(root));
+
         if (letTest) {
             System.out.println("preorder :");
             preorderTransverse(root);
@@ -64,6 +66,17 @@ public class BinaryTree {
             return 0;
 
         return Math.max(height(node.left), height(node.right)) + 1;
+    }
+    private static int isBalancedTree(Node node) {
+        if (node == null)
+            return 0;
+
+        int l = isBalancedTree(node.left);
+        int r = isBalancedTree(node.right);
+        
+        if( l!=-1 && r!=-1 && Math.abs(l-r) <=10)return (Math.max(l,r) + 1);
+
+        return -1;
     }
 
     private static void postorderItertive(Node root) {
