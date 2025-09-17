@@ -8,20 +8,6 @@ class Node {
 
     public Node(int data) {
         this.data = data;
-        this.left = null;
-        this.right = null;
-    }
-
-    public Node(int data, Node right) {
-        this.data = data;
-        this.left = null;
-        this.right = right;
-    }
-
-    public Node(Node left, int data) {
-        this.data = data;
-        this.left = left;
-        this.right = null;
     }
 }
 
@@ -34,10 +20,8 @@ public class BinaryTree {
         root.right = new Node(14);
         root.left.left = new Node(15);
 
-        root.right.right = new Node(15);
-        root.right.right.right = new Node(15);
-        
-        System.out.println("height: "+hight(root, 1));
+        root.right.right = new Node(16);
+        root.right.right.right = new Node(17);
 
         if (letTest) {
             System.out.println("preorder :");
@@ -46,13 +30,41 @@ public class BinaryTree {
             inorderTransverse(root);
             System.out.println("\n postorder :");
             postorderTransverse(root);
-            System.out.println("level vise travelsal");
+            System.out.println("\nlevel order :");
             levelOrderTraversel(root);
         }
-
     }
 
-    
+    private static int heightBFS(Node root) {
+        if (root == null)
+            return 0;
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+
+        int height = 0;
+
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size(); // number of nodes in this level
+            for (int i = 0; i < levelSize; i++) {
+                Node curr = queue.poll();
+                if (curr.left != null)
+                    queue.add(curr.left);
+                if (curr.right != null)
+                    queue.add(curr.right);
+            }
+            height++; // after finishing one level
+        }
+
+        return height;
+    }
+
+    private static int height(Node node) {
+        if (node == null)
+            return 0;
+
+        return Math.max(height(node.left), height(node.right)) + 1;
+    }
 
     private static void postorderItertive(Node root) {
         if (root == null)
@@ -65,7 +77,6 @@ public class BinaryTree {
 
         while (!st.isEmpty()) {
             Node curr = st.pop();
-
             printingOrderStack.push(curr);
 
             if (curr.left != null)
@@ -74,16 +85,18 @@ public class BinaryTree {
                 st.push(curr.right);
         }
 
-        // Final printing (reverse order)
         while (!printingOrderStack.isEmpty()) {
             System.out.println(printingOrderStack.pop().data);
         }
     }
 
     private static void levelOrderTraversel(Node root) {
-        Queue<Node> queue = new LinkedList<>();
+        if (root == null)
+            return;
 
+        Queue<Node> queue = new LinkedList<>();
         queue.add(root);
+
         while (!queue.isEmpty()) {
             Node currentNode = queue.poll();
             System.out.println(currentNode.data);
@@ -92,13 +105,12 @@ public class BinaryTree {
                 queue.add(currentNode.left);
             if (currentNode.right != null)
                 queue.add(currentNode.right);
-
         }
     }
 
     private static void preorderIterative(Node root) {
         if (root == null)
-            return; // edge case
+            return;
 
         Stack<Node> st = new Stack<>();
         st.push(root);
@@ -107,7 +119,10 @@ public class BinaryTree {
             Node curr = st.pop();
             System.out.println(curr.data);
 
-            // Push right child first so that left is processed first
+            if (curr.right != null)
+                st.push(curr.right);
+            if (curr.left != null)
+                st.push(curr.left);
         }
     }
 
@@ -116,17 +131,12 @@ public class BinaryTree {
         Node curr = root;
 
         while (curr != null || !st.isEmpty()) {
-            // Go all the way left
             while (curr != null) {
                 st.push(curr);
                 curr = curr.left;
             }
-
-            // Now process node
             curr = st.pop();
             System.out.println(curr.data);
-
-            // Go right subtree
             curr = curr.right;
         }
     }
@@ -134,30 +144,23 @@ public class BinaryTree {
     private static void inorderTransverse(Node node) {
         if (node == null)
             return;
-
-        preorderTransverse(node.left);
-
+        inorderTransverse(node.left);
         System.out.print(node.data + " ");
-
-        preorderTransverse(node.right);
+        inorderTransverse(node.right);
     }
 
     private static void postorderTransverse(Node node) {
         if (node == null)
             return;
-
-        preorderTransverse(node.left);
-        preorderTransverse(node.right);
-
+        postorderTransverse(node.left);
+        postorderTransverse(node.right);
         System.out.print(node.data + " ");
     }
 
     private static void preorderTransverse(Node node) {
         if (node == null)
             return;
-
         System.out.print(node.data + " ");
-
         preorderTransverse(node.left);
         preorderTransverse(node.right);
     }
