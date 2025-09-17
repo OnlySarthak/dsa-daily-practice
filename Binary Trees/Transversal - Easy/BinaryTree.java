@@ -34,7 +34,10 @@ public class BinaryTree {
         root.right = new Node(14);
         root.left.left = new Node(15);
 
-        postorderIntertive(root);
+        root.right.right = new Node(15);
+        root.right.right.right = new Node(15);
+        
+        System.out.println("height: "+hight(root, 1));
 
         if (letTest) {
             System.out.println("preorder :");
@@ -49,7 +52,9 @@ public class BinaryTree {
 
     }
 
-    private static void postorderIntertive(Node root) {
+    
+
+    private static void postorderItertive(Node root) {
         if (root == null)
             return;
 
