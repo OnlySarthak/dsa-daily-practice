@@ -23,7 +23,9 @@ public class BinaryTree {
         root.right.right = new Node(16);
         root.right.right.right = new Node(17);
 
-        System.out.println(isBalancedTree(root));
+        int[] maxi = new int[1]; // diameter holder
+        diameter(root, maxi); // fills maxi[0]
+        System.out.println("Diameter = " + maxi[0]);
 
         if (letTest) {
             System.out.println("preorder :");
@@ -35,6 +37,18 @@ public class BinaryTree {
             System.out.println("\nlevel order :");
             levelOrderTraversel(root);
         }
+    }
+
+    private static int diameter(Node node, int[] maxi) {
+        if (node == null)
+            return 0;
+
+        int lh = diameter(node.left, maxi);
+        int rh = diameter(node.right, maxi);
+
+        maxi[0] = Math.max(maxi[0], lh + rh);
+
+        return 1 + Math.max(lh, rh);
     }
 
     private static int heightBFS(Node root) {
@@ -67,14 +81,16 @@ public class BinaryTree {
 
         return Math.max(height(node.left), height(node.right)) + 1;
     }
+
     private static int isBalancedTree(Node node) {
         if (node == null)
             return 0;
 
         int l = isBalancedTree(node.left);
         int r = isBalancedTree(node.right);
-        
-        if( l!=-1 && r!=-1 && Math.abs(l-r) <=10)return (Math.max(l,r) + 1);
+
+        if (l != -1 && r != -1 && Math.abs(l - r) <= 10)
+            return (Math.max(l, r) + 1);
 
         return -1;
     }
