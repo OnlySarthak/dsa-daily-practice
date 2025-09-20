@@ -23,9 +23,11 @@ public class BinaryTree {
         root.right.right = new Node(16);
         root.right.right.right = new Node(17);
 
-        int[] maxi = new int[1]; // diameter holder
-        maxpath(root, maxi); // fills maxi[0]
-        System.out.println("maxpath = " + maxi[0]);
+        // int[] maxi = new int[1]; // diameter holder
+        // maxpath(root, maxi); // fills maxi[0]
+        // System.out.println("maxpath = " + maxi[0]);
+
+        System.out.println(isSameTree(root,root));
 
         if (letTest) {
             System.out.println("preorder :");
@@ -51,6 +53,12 @@ public class BinaryTree {
         return 1 + Math.max(lh, rh);
     }
 
+    public static boolean isSameTree(Node nodeT1, Node nodeT2) {
+        if(nodeT1 == null && nodeT2 == null) return (nodeT1 == nodeT2);
+
+        return (nodeT1.data == nodeT2.data) && isSameTree(nodeT1.left, nodeT2.left) && isSameTree(nodeT1.right, nodeT2.right);
+    }
+
     private static int maxpath(Node node, int[] maxi) {
         if (node == null)
             return 0;
@@ -61,7 +69,7 @@ public class BinaryTree {
         // max is current or old
         maxi[0] = Math.max(maxi[0], (node.data + lh + rh));
 
-        //sama as max height but with value
+        // sama as max height but with value
         return node.data + Math.max(lh, rh);
     }
 
