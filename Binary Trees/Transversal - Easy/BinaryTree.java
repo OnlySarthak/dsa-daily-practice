@@ -1,3 +1,4 @@
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -16,18 +17,21 @@ public class BinaryTree {
         Node root = new Node(11);
         boolean letTest = false;
 
-        root.left = new Node(13);
-        root.right = new Node(14);
-        root.left.left = new Node(15);
+        root.left = new Node(12);
+        root.right = new Node(13);
 
-        root.right.right = new Node(16);
-        root.right.right.right = new Node(17);
+        root.left.left = new Node(14);
+        root.left.right = new Node(15);
+        root.right.left = new Node(16);
+        root.right.right = new Node(17);
+
+        // root.right.right.right = new Node(17);
 
         // int[] maxi = new int[1]; // diameter holder
         // maxpath(root, maxi); // fills maxi[0]
         // System.out.println("maxpath = " + maxi[0]);
 
-        System.out.println(isSameTree(root,root));
+        zigzagTransversal(root);
 
         if (letTest) {
             System.out.println("preorder :");
@@ -41,6 +45,51 @@ public class BinaryTree {
         }
     }
 
+    private static void zigzagTransversal(Node root) {
+        if (root == null)
+            return;
+
+        Deque<Node> queue = new LinkedList<>();
+        queue.add(root);
+        int latch = 0;
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            
+            //loop for one layer
+            while(size!=0){
+                if(latch == 0){     // 0  then left to right
+                    //fetch curren level L->R
+                    Node currentNode = queue.removeFirst();
+                    System.out.println(currentNode.data); 
+
+                    //add children node L->R
+                    if (currentNode.left != null)
+                    queue.addLast(currentNode.left);
+                    if (currentNode.right != null)
+                    queue.addLast(currentNode.right);
+                }
+                else{               //else right to left
+                    //fetch curren level L<-R
+                    Node currentNode = queue.removeLast();
+                    System.out.print(currentNode.data + " ");
+                    
+                    //add children node L<-R
+                    if (currentNode.right != null)
+                        queue.addFirst(currentNode.right);
+                    if (currentNode.left != null)
+                        queue.addFirst(currentNode.left);
+                }
+                size--;
+            }
+            System.out.println();
+
+            //change latch for next iteration
+            latch = 1-latch;
+
+        }
+    }
+        
     private static int diameter(Node node, int[] maxi) {
         if (node == null)
             return 0;
