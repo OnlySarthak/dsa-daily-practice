@@ -31,7 +31,7 @@ public class BinaryTree {
         // maxpath(root, maxi); // fills maxi[0]
         // System.out.println("maxpath = " + maxi[0]);
 
-        zigzagTransversal(root);
+        boundryTraversal(root);
 
         if (letTest) {
             System.out.println("preorder :");
@@ -45,6 +45,81 @@ public class BinaryTree {
         }
     }
 
+    private static void boundryTraversal(Node node) {
+        if (node == null)
+            return;
+
+        // step 1 : print starting point(root)
+        System.out.println(node.data);
+
+        // print left side
+        printLeftSide(node.left);
+
+        // print right side excluding leave nodes
+        printRightSideReversed(node.right);
+
+    }
+
+    public static void printLeftSide(Node left) {
+        if (left == null)
+            return;
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(left);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+
+            for (int i = 0; i < size; i++) {
+                Node current = queue.poll();
+
+                // Print leaf nodes or leftmost node of the level
+                if (current.left == null && current.right == null || i == 0) {
+                    System.out.println(current.data);
+                }
+
+                if (current.left != null)
+                    queue.add(current.left);
+                if (current.right != null)
+                    queue.add(current.right);
+            }
+        }
+    }
+
+    public static void printRightSideReversed(Node right) {
+        if (right == null)
+            return;
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(right);
+
+        Stack<Integer> st = new Stack<>();
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+
+            for (int i = 0; i < size; i++) {
+                Node current = queue.poll();
+
+                // Push leaf nodes or rightmost node of level
+                if (current.left == null && current.right == null || i == 0) {
+                    st.push(current.data);
+                }
+
+                // Add right child first for true “rightmost-first reversed” effect
+                if (current.right != null)
+                    queue.add(current.right);
+                if (current.left != null)
+                    queue.add(current.left);
+            }
+        }
+
+        // Print stack in reversed order
+        while (!st.isEmpty()) {
+            System.out.println(st.pop());
+        }
+    }
+
     private static void zigzagTransversal(Node root) {
         if (root == null)
             return;
@@ -55,26 +130,27 @@ public class BinaryTree {
 
         while (!queue.isEmpty()) {
             int size = queue.size();
-            
-            //loop for one layer
-            while(size!=0){
-                if(latch == 0){     // 0  then left to right
-                    //fetch curren level L->R
-                    Node currentNode = queue.removeFirst();
-                    System.out.println(currentNode.data); 
 
-                    //add children node L->R
-                    if (currentNode.left != null)
-                    queue.addLast(currentNode.left);
-                    if (currentNode.right != null)
-                    queue.addLast(currentNode.right);
-                }
-                else{               //else right to left
-                    //fetch curren level L<-R
+            // loop for one layer
+            while (size != 0) {
+                if (latch == 0) { // 0 then left to right
+                    // fetch curren level L->R
+                    Node currentNode = queue.removeFirst();
+                    System.out.println(currentNode.data);
+
+                    // add children node L->R
+                    if (currentNode.left != null) {
+                        queue.addLast(currentNode.left);
+                    }
+                    if (currentNode.right != null) {
+                        queue.addLast(currentNode.right);
+                    }
+                } else { // else right to left
+                    // fetch curren level L<-R
                     Node currentNode = queue.removeLast();
                     System.out.print(currentNode.data + " ");
-                    
-                    //add children node L<-R
+
+                    // add children node L<-R
                     if (currentNode.right != null)
                         queue.addFirst(currentNode.right);
                     if (currentNode.left != null)
@@ -84,12 +160,12 @@ public class BinaryTree {
             }
             System.out.println();
 
-            //change latch for next iteration
-            latch = 1-latch;
+            // change latch for next iteration
+            latch = 1 - latch;
 
         }
     }
-        
+
     private static int diameter(Node node, int[] maxi) {
         if (node == null)
             return 0;
@@ -103,9 +179,11 @@ public class BinaryTree {
     }
 
     public static boolean isSameTree(Node nodeT1, Node nodeT2) {
-        if(nodeT1 == null && nodeT2 == null) return (nodeT1 == nodeT2);
+        if (nodeT1 == null && nodeT2 == null)
+            return (nodeT1 == nodeT2);
 
-        return (nodeT1.data == nodeT2.data) && isSameTree(nodeT1.left, nodeT2.left) && isSameTree(nodeT1.right, nodeT2.right);
+        return (nodeT1.data == nodeT2.data) && isSameTree(nodeT1.left, nodeT2.left)
+                && isSameTree(nodeT1.right, nodeT2.right);
     }
 
     private static int maxpath(Node node, int[] maxi) {

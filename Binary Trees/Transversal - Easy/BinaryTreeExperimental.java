@@ -2,8 +2,41 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
+//tedha hai par mera hai
 
 public class BinaryTreeExperimental {
+    public static void printLeftSide(Node left) {
+        if (left == null)
+            return;
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(left);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+
+            // Process each level
+            for (int i = 0; i < size; i++) {
+                Node current = queue.poll();
+
+                if (current.left == null && current.right == null) {
+                    System.out.println(current.data);
+                    continue;
+                }
+
+                // Print first node of level or leaf node
+                if (i == 0 || (current.left == null && current.right == null)) {
+                    System.out.println(current.data);
+                }
+
+                if (current.left != null)
+                    queue.add(current.left);
+                if (current.right != null)
+                    queue.add(current.right);
+            }
+        }
+    }
+
     private static void inorderIterative2(Node root) {
         // basic idea by brain
         if (root == null)
@@ -55,7 +88,6 @@ public class BinaryTreeExperimental {
         return Math.max(mxL, mxR);
     }
 
-    
     private static void hightIterative(Node root) {
         if (root == null)
             return;
@@ -91,11 +123,12 @@ public class BinaryTreeExperimental {
     }
 
     private static int heightIterative2(Node root) {
-        //very efficient
+        // very efficient
         /*
          * ✅ Time complexity → O(N), because each node is enqueued and dequeued once.
-
-✅ Space complexity → O(W), where W = max width of the tree (same as standard BFS).
+         * 
+         * ✅ Space complexity → O(W), where W = max width of the tree (same as standard
+         * BFS).
          */
         if (root == null)
             return 0;
