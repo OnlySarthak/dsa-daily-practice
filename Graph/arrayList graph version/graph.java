@@ -1,7 +1,6 @@
 import java.util.*;
 
 public class graph {
-
     // BFS traversal function
     public static ArrayList<Integer> bfsOfGraph(int start, int V, ArrayList<ArrayList<Integer>> adj) {
         ArrayList<Integer> bfs = new ArrayList<>();
