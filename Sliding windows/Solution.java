@@ -1,6 +1,36 @@
 import java.util.HashMap;
 
 public class Solution {
+    public static int twoCommonElesFrqSum(int[] fruits) {
+        HashMap<Integer, Integer> hm = new HashMap<>(2);
+        int iter = 0, bucketCurr = fruits[0], bucketLast = -1, n = fruits.length;
+        
+        //precomputation
+        hm.put(bucketCurr, 0);
+        hm.put(bucketLast, 0);
+
+        while(iter<n){
+            if(fruits[iter] == bucketCurr || hm.get(bucketCurr)==1){                    //if i is same fruit in Current bucket then inc
+                hm.put(bucketCurr , hm.get(bucketCurr)+1);
+            }else{      
+                if(fruits[iter]==bucketLast){
+                    int temp = bucketLast;
+                    bucketLast = bucketCurr;
+                    bucketCurr = temp;
+                }else{
+                        int temp = bucketLast;
+                        bucketLast = bucketCurr;
+                        bucketCurr = temp;
+                    bucketCurr = fruits[iter];
+                    hm.put(bucketCurr, 1);
+                }
+            }
+           iter++;
+        }
+
+        return (hm.get(bucketCurr)+hm.get(bucketLast));
+    }
+
     public int consecetiveOnes3(int[] nums, int k) {
         // smart sliding windows approach | n
         int n = nums.length;
@@ -105,7 +135,9 @@ public class Solution {
     // For quick testing
     public static void main(String[] args) {
         Solution sol = new Solution();
-        String test = "abcabcbb";
-        System.out.println(sol.lengthOfLongestSubstring(test)); // Output: 3
+        int[] arr = {1,2,3,2,2};
+        // int[] arr = {3,3,3,1,2,1,1,2,3,3,4};
+        int ans = totalFruit(arr);
+        System.out.println(ans); 
     }
 }
