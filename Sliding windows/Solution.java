@@ -1,6 +1,44 @@
 import java.util.HashMap;
 
 public class Solution {
+     public static int totalFruit(int[] fruits) {
+        int n = fruits.length;
+        int iter = 0;
+        int bucketA = fruits[0];
+        int bucketB = -1;
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        hm.put(bucketA, 0);
+        hm.put(bucketB, 0);
+
+        while (iter < n) {
+            //calculate continuous similar fruits
+            int tempCtr = 1, currFrt = fruits[iter];
+            while (iter + 1 < n && fruits[iter + 1] == currFrt) {
+                iter++;
+                tempCtr++;
+            }
+
+            if (hm.containsKey(currFrt)) {
+                // if current fruit is same as bucket A
+                hm.put(currFrt, hm.get(currFrt) + tempCtr);
+            }else{
+                //if butket A is bigger
+                if (hm.get(bucketA) > hm.get(bucketB)){
+                    //reset buckte b
+                }
+                else{
+                    reset 
+                }
+
+            } 
+            System.out.println(bucketA + " " + bucketB + " at " + iter);
+            iter++;
+        }
+
+        // you didn’t compute maxFruits in this code snippet
+        return Math.max(hm.get(bucketA), hm.get(bucketB)); // placeholder
+    }
+
     public static int twoCommonElesFrqSum(int[] fruits) {
         HashMap<Integer, Integer> hm = new HashMap<>(2);
         int iter = 0, bucketCurr = fruits[0], bucketLast = -1, n = fruits.length;
