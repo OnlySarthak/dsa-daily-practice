@@ -47,4 +47,18 @@ public class jump {
 
         return true; // last index is reachable
     }
+
+    public boolean canJump(int[] arr) {     //standerd optimal - with hint from striver
+        int n = arr.length;
+        int target = n - 1; // start from the last index
+
+        for (int i = n - 2; i >= 0; i--) {
+            if (arr[i] + i >= target) {
+                target = i; // update target to this index
+            }
+        }
+
+        // if target reaches 0, start can reach the end
+        return target == 0;
+    }
 }
