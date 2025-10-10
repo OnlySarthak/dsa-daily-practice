@@ -9,6 +9,7 @@ public class largesstSubarrWithDiffKEle {
         Map<Integer, Integer> countMap = new HashMap<>();
 
         while (right < n) {
+            //inc right pointer element one by one in map
             countMap.put(arr[right], countMap.getOrDefault(arr[right], 0) + 1);
 
             // shrink window if more than k distinct
@@ -20,8 +21,9 @@ public class largesstSubarrWithDiffKEle {
                 left++;
             }
 
+            //else veify length at every right inceament 
             ans = Math.max(ans, right - left + 1);
-            right++;
+            right++;        //inc right pointer one by one
         }
 
         return ans;
