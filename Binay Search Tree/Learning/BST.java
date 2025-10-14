@@ -17,4 +17,12 @@ class BST {
             return searchBST(root.right, val);
         }
     }
+
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (root == null)  return new TreeNode(val);   // base case
+
+        if (val > root.val) root.right = insertIntoBST(root.right, val);
+        else root.left = insertIntoBST(root.left, val);
+        return root;
+    }
 }
