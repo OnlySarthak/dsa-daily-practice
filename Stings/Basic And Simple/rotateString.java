@@ -36,7 +36,7 @@ public class rotateString {
 
     }
 
-    public boolean isAnagram(String s, String t) {
+    public boolean isAnagram(String s, String t) {      //both strings should have same amount of charecter set
         if (s.length() != t.length()) return false;
         
         int[] count = new int[26];
