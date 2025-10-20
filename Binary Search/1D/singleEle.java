@@ -24,7 +24,7 @@ public class singleEle {
     }
 
     public int singleNonDuplicate3(int[] nums) {
-        // standard soln | O(log n)
+        // standard soln | O(log n) |
         int l = 0, r = nums.length - 1;
 
         while (l < r) {
