@@ -1,0 +1,47 @@
+import java.util.*;
+
+class Tree {
+    int val;
+    Tree left, right;
+    Tree(int val) { this.val = val; }
+}
+
+public class TopView {
+    public static ArrayList<Integer> topView(Tree root) {
+        ArrayList<Integer> result = new ArrayList<>();
+        if (root == null) return result;
+
+        // Map to store first node at each horizontal distance
+        Map<Integer, Integer> map = new TreeMap<>();
+
+        // Queue for BFS: stores node + its horizontal distance
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(root, 0));
+
+        while (!q.isEmpty()) {
+            Pair temp = q.poll();
+            Tree node = temp.node;
+            int hd = temp.hd;
+
+            // store only first node at each horizontal distance
+            if (!map.containsKey(hd)) {
+                map.put(hd, node.val);
+            }
+
+            if (node.left != null) q.add(new Pair(node.left, hd - 1));
+            if (node.right != null) q.add(new Pair(node.right, hd + 1));
+        }
+
+        result.addAll(map.values());
+        return result;
+    }
+
+    static class Pair {
+        Tree node;
+        int hd;
+        Pair(Tree node, int hd) {
+            this.node = node;
+            this.hd = hd;
+        }
+    }
+}
