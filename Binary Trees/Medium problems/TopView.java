@@ -7,6 +7,15 @@ class Tree {
 }
 
 public class TopView {
+    static class Pair {
+        Tree node;
+        int hd;
+        Pair(Tree node, int hd) {
+            this.node = node;
+            this.hd = hd;
+        }
+    }
+
     public static ArrayList<Integer> topView(Tree root) {
         ArrayList<Integer> result = new ArrayList<>();
         if (root == null) return result;
@@ -36,12 +45,29 @@ public class TopView {
         return result;
     }
 
-    static class Pair {
-        Tree node;
-        int hd;
-        Pair(Tree node, int hd) {
-            this.node = node;
-            this.hd = hd;
+    public static ArrayList<Integer> bottomView(Tree root) {
+        ArrayList<Integer> result = new ArrayList<>();
+        if (root == null) return result;
+
+        // Map to store last node at each horizontal distance
+        Map<Integer, Integer> map = new TreeMap<>();
+        Queue<Pair> q = new LinkedList<>();
+
+        q.add(new Pair(root, 0));
+
+        while (!q.isEmpty()) {
+            Pair temp = q.poll();
+            Tree node = temp.node;
+            int hd = temp.hd;
+
+            // overwrite previous node at same HD
+            map.put(hd, node.val);
+
+            if (node.left != null) q.add(new Pair(node.left, hd - 1));
+            if (node.right != null) q.add(new Pair(node.right, hd + 1));
         }
+
+        result.addAll(map.values());
+        return result;
     }
 }
