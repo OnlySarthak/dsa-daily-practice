@@ -95,5 +95,22 @@ public class TopView {
         rightView(node.right, level + 1, result);
     }
 
-    
+    public boolean isSymmetric(TreeNode root) {
+        ArrayList<> q = new LinkedList<>();
+        int levelChildCnt = 1;
+        q.add(root);
+
+        while(!q.isEmpty()){
+            if(!isPalindrom(q))return false;
+
+            for(int i = 0; i < Arr.size(); i++){
+                TreeNode curr = q.get(0);
+
+                if(curr != null )q.push(curr.left);
+                if(curr != null )q.push(curr.right);
+            }
+        }
+
+        return true;
+    }
 }
