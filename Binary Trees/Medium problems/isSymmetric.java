@@ -5,7 +5,7 @@ import java.util.Arrays;
 import javax.swing.tree.TreeNode;
 
 public class isSymmetric {
-    //try 1- passed but not efficient as original
+    // try 1- passed but not efficient as original
     public boolean isSymmetric(TreeNode root) {
         if (root == null)
             return true;
@@ -93,4 +93,18 @@ public class isSymmetric {
         return true;
     }
 
+    // standerd soln
+    public boolean isSymmetric(TreeNode root) {
+        return root == null || isSymmetricHelp(root.left, root.right);
+    }
+
+    private boolean isSymmetricHelp(TreeNode left, TreeNode right){
+        if(left==null || right==null)return left == right;
+
+        if(left.val != right.val) return false;
+
+        //carefully read the arguments 
+        //we are simultaniously going to each corresponding left and right node 
+        return isSymetricHelp(left.left, right.right) && isSymetricHelp(left.right, right. left);
+    }
 }
