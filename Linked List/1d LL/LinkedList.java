@@ -25,6 +25,17 @@ public class LinkedList {
         printList(head);
     }
 
+    private static Node convertLL2Arr(Node head) {
+        int len = lengthOfLL(head);
+        int[] arr = new int[len];
+        Node temp = head;
+        for (int i = 0; i < len; i++) {
+            arr[i] = temp.data;
+            temp = temp.next;
+        }
+        return head;
+    }
+
     private static Node convertArr2LL(int[] arr) {
         Node head = new Node(arr[0]); // First node
         Node mover = head; // To keep track of the last node
