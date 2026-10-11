@@ -1,0 +1,1 @@
+dp.get(i).get(j).add(Math.min(l, r) + triangle.get(i).get(j));
